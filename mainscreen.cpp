@@ -1,13 +1,11 @@
 #include "mainscreen.h"
 #include "ui_mainscreen.h"
 #include <QString>
-#include <QMap>
 
 #include <iostream>
 using namespace std;
 
-// Define a QMap to store signup information
-QMap<QString, QString> signupInfo;
+
 
 
 
@@ -42,8 +40,6 @@ void MainScreen::on_signupBtn_clicked()
     else
     {
         ui->stackedWidget->setCurrentIndex(0);
-        // Store signup information in the QMap
-        signupInfo.insert(signupEmail, signupPw);
     }
 
 }
@@ -54,15 +50,9 @@ void MainScreen::on_loginBtn_clicked()
     QString loginEmail = ui->loginEmail->text();
     QString loginPw = ui->loginPw->text();
 
-    // Check if the login email exists in the signupInfo map and if the password matches
-    if(signupInfo.contains(loginEmail) && signupInfo.value(loginEmail) == loginPw)
-    {
+
        ui->stackedWidget->setCurrentIndex(2);
-    }
-    else
-    {
-        ui->alertMsg2->setText("Incorrect Email & PW");
-    }
+    
 
 }
 
