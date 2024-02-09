@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>login.png</file>
-        <file>password.jpg</file>
-        <file>nepal.jpg</file>
-        <file>nepal-screen.png</file>
-    </qresource>
-</RCC>

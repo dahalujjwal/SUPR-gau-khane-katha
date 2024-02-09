@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>login.png</file>
+        <file>nepal-screen.png</file>
+        <file>password.jpg</file>
+        <file>gau_khane.png</file>
+        <file>supr_logo.png</file>
+        <file>supr-png.png</file>
+        <file>welcomeBack.png</file>
+        <file>nepal.jpg</file>
+    </qresource>
+</RCC>
