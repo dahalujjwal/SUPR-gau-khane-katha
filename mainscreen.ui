@@ -987,6 +987,41 @@ font:700 40pt;
        <string>Back</string>
       </property>
      </widget>
+     <widget class="QLabel" name="scoreLabel">
+      <property name="geometry">
+       <rect>
+        <x>1080</x>
+        <y>30</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="resultPage">
+     <property name="styleSheet">
+      <string notr="true">background-image: url(:/welcomeBack.png);</string>
+     </property>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>30</y>
+        <width>141</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);
+font: 700 16pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>&lt;center&gt;Result&lt;/center&gt;</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

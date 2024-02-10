@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 12.0.2, 2024-02-09T21:04:45. -->
+<!-- Written by QtCreator 12.0.1, 2024-02-10T18:41:07. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{c6f4de2a-fcc3-4c84-8099-32622ff9b52b}</value>
+  <value type="QByteArray">{d24f9c20-28a2-42bc-a8f4-9d88fcf1d2a2}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -97,8 +97,8 @@
    <value type="qlonglong" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
     <value type="int" key="EnableQmlDebugging">0</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">E:\00-Desktop\01-qtCPP-project\00-OOP\build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Debug</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">E:/00-Desktop/01-qtCPP-project/00-OOP/build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Debug</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:\Users\Premier\OneDrive\Desktop\SUPR-gau-khane-katha\build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Debug</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">C:/Users/Premier/OneDrive/Desktop/SUPR-gau-khane-katha/build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Debug</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -136,8 +136,8 @@
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">2</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">E:\00-Desktop\01-qtCPP-project\00-OOP\build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Release</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">E:/00-Desktop/01-qtCPP-project/00-OOP/build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Release</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:\Users\Premier\OneDrive\Desktop\SUPR-gau-khane-katha\build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Release</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">C:/Users/Premier/OneDrive/Desktop/SUPR-gau-khane-katha/build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Release</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -177,8 +177,8 @@
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.2">
     <value type="int" key="EnableQmlDebugging">0</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">E:\00-Desktop\01-qtCPP-project\00-OOP\build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Profile</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">E:/00-Desktop/01-qtCPP-project/00-OOP/build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Profile</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:\Users\Premier\OneDrive\Desktop\SUPR-gau-khane-katha\build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Profile</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">C:/Users/Premier/OneDrive/Desktop/SUPR-gau-khane-katha/build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Profile</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -241,13 +241,13 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="bool" key="PE.EnvironmentAspect.PrintOnRun">false</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:E:/00-Desktop/01-qtCPP-project/00-OOP/supr-gau-khane-katha/supr-gau-khane-katha.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">E:/00-Desktop/01-qtCPP-project/00-OOP/supr-gau-khane-katha/supr-gau-khane-katha.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/Premier/OneDrive/Desktop/SUPR-gau-khane-katha/SUPR-gau-khane-katha/supr-gau-khane-katha.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/Premier/OneDrive/Desktop/SUPR-gau-khane-katha/SUPR-gau-khane-katha/supr-gau-khane-katha.pro</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/00-Desktop/01-qtCPP-project/00-OOP/build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Debug</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/Premier/OneDrive/Desktop/SUPR-gau-khane-katha/build-supr-gau-khane-katha-Desktop_Qt_6_6_1_MinGW_64_bit-Debug</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

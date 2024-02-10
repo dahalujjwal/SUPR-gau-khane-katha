@@ -2,12 +2,22 @@
 #define MAINSCREEN_H
 
 #include <QMainWindow>
+#include <QString>
+#include <vector>
+#include <QLabel>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainScreen;
 }
 QT_END_NAMESPACE
+
+struct QuizQuestion {
+    QString question;
+    QString options[4];
+    int correctOptionIndex;
+};
 
 class MainScreen : public QMainWindow
 {
@@ -42,7 +52,18 @@ private slots:
 
     void on_backBtn2_clicked();
 
+    void on_nextBtn_clicked();
+
 private:
     Ui::MainScreen *ui;
+    std::vector<QuizQuestion> quizQuestions;
+    int currentQuestionIndex;
+    int score;
+
+    QLabel* scorelabel;
+
+    void loadQuizQuestions();
+    void displayCurrentQuestion();
+    void updateScoreLabel();
 };
 #endif // MAINSCREEN_H
