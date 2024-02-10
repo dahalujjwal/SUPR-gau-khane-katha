@@ -997,7 +997,7 @@ font:700 40pt;
        </rect>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>&lt;center&gt;Score&lt;/center&gt;</string>
       </property>
      </widget>
     </widget>

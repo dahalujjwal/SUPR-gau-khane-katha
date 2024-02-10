@@ -572,7 +572,7 @@ public:
         radioButton_4->setText(QCoreApplication::translate("MainScreen", "\340\244\252\340\245\207\340\244\250\340\245\215\340\244\270\340\244\277\340\244\262", nullptr));
         nextBtn->setText(QCoreApplication::translate("MainScreen", "Next", nullptr));
         backBtn2->setText(QCoreApplication::translate("MainScreen", "Back", nullptr));
-        scoreLabel->setText(QCoreApplication::translate("MainScreen", "TextLabel", nullptr));
+        scoreLabel->setText(QCoreApplication::translate("MainScreen", "<center>Score</center>", nullptr));
         label_14->setText(QCoreApplication::translate("MainScreen", "<center>Result</center>", nullptr));
     } // retranslateUi
 
