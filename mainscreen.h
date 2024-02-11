@@ -5,6 +5,7 @@
 #include <QString>
 #include <vector>
 #include <QLabel>
+#include <QRadioButton>
 
 
 QT_BEGIN_NAMESPACE
@@ -53,12 +54,19 @@ private slots:
     void on_backBtn2_clicked();
 
     void on_nextBtn_clicked();
+    void onAnswerButtonToggled(bool checked);
 
 private:
     Ui::MainScreen *ui;
     std::vector<QuizQuestion> quizQuestions;
     int currentQuestionIndex;
     int score;
+
+    QRadioButton *radioButton;
+    QRadioButton *radioButton_2;
+    QRadioButton *radioButton_3;
+    QRadioButton *radioButton_4;
+
 
     QLabel* scorelabel;
 

@@ -16,6 +16,12 @@ MainScreen::MainScreen(QWidget *parent)
 {
     ui->setupUi(this);
     loadQuizQuestions();
+
+    connect(ui->radioButton, SIGNAL(toggled(bool)), this, SLOT(onAnswerButtonToggled(bool)));
+    connect(ui->radioButton_2, SIGNAL(toggled(bool)), this, SLOT(onAnswerButtonToggled(bool)));
+    connect(ui->radioButton_3, SIGNAL(toggled(bool)), this, SLOT(onAnswerButtonToggled(bool)));
+    connect(ui->radioButton_4, SIGNAL(toggled(bool)), this, SLOT(onAnswerButtonToggled(bool)));
+
 }
 
 MainScreen::~MainScreen()
@@ -24,10 +30,10 @@ MainScreen::~MainScreen()
 }
 void MainScreen::loadQuizQuestions()
 {
-    QuizQuestion question1 = {"Question 1", {"option1", "OPtion 2", "option3", "option4"}, 2};
+    QuizQuestion question1 = {"Question 1", {"option1", "OPtion 2", "option3", "option4"}, 1};
     QuizQuestion question2 = {"Question 2", {"option a", "OPtion b", "option c", "optiond"}, 2};
-    QuizQuestion question3 = {"Question 3", {"option a45", "OPtion b45", "option b45", "optiond45"}, 2};
-    QuizQuestion question4 = {"Question 4", {"option d4", "OPtion d5", "option e4", "option e5"}, 2};
+    QuizQuestion question3 = {"Question 3", {"option a45", "OPtion b45", "option b45", "optiond45"}, 3};
+    QuizQuestion question4 = {"Question 4", {"option d4", "OPtion d5", "option e4", "option e5"}, 4};
     quizQuestions = {question1, question2, question3, question4};
 }
 
@@ -147,7 +153,9 @@ void MainScreen::on_backBtn_clicked()
 
 void MainScreen::on_gauKhane_clicked()
 {
+
     ui->stackedWidget->setCurrentIndex(5);
+
 }
 
 
@@ -158,14 +166,23 @@ void MainScreen::on_backBtn2_clicked()
 
 void MainScreen::on_nextBtn_clicked()
 {
-    if(ui->radioButton->isChecked())
-        ui->radioButton->setChecked(false);
-    if(ui->radioButton_2->isChecked())
-        ui->radioButton_2->setChecked(false);
-    if(ui->radioButton_3->isChecked())
-        ui->radioButton_3->setChecked(false);
-    if(ui->radioButton_4->isChecked())
-        ui->radioButton_4->setChecked(false);
+    bool scoreUpdated=false;
+    ui->demo_label->hide();
+    ui->radioButton->setStyleSheet("background-color: none;");
+    ui->radioButton_2->setStyleSheet("background-color: none;");
+    ui->radioButton_3->setStyleSheet("background-color: none;");
+    ui->radioButton_4->setStyleSheet("background-color: none;");
+
+    ui->radioButton->setAutoExclusive(false);
+    ui->radioButton_2->setAutoExclusive(false);
+    ui->radioButton_3->setAutoExclusive(false);
+    ui->radioButton_4->setAutoExclusive(false);
+
+    // Disable all radio buttons for the current question
+    ui->radioButton->setEnabled(false);
+    ui->radioButton_2->setEnabled(false);
+    ui->radioButton_3->setEnabled(false);
+    ui->radioButton_4->setEnabled(false);
 
     for (int i = 0; i < 4; ++i) {
         QRadioButton* radioButton = nullptr;
@@ -187,16 +204,128 @@ void MainScreen::on_nextBtn_clicked()
         }
 
         // Check if the current radio button is checked and matches the correct option index
-        if (radioButton && radioButton->isChecked() && i == quizQuestions[currentQuestionIndex].correctOptionIndex) {
+        if (radioButton && radioButton->isChecked() && i == quizQuestions[currentQuestionIndex].correctOptionIndex && !scoreUpdated) {
             // Increment the score because the user selected the correct answer
             ++score;
+            scoreUpdated = true;  // Set the flag to true to avoid incrementing the score multiple times
             break;  // Exit the loop since we found the correct answer
         }
-
     }
 
+    // Move to the next question or handle as needed
     ++currentQuestionIndex;
     updateScoreLabel();
     displayCurrentQuestion();
+
+    // Enable radio buttons for the new question
+    ui->radioButton->setEnabled(true);
+    ui->radioButton_2->setEnabled(true);
+    ui->radioButton_3->setEnabled(true);
+    ui->radioButton_4->setEnabled(true);
 }
+
+// void MainScreen::onAnswerButtonToggled(bool checked)
+// {
+//     QRadioButton *toggledButton = qobject_cast<QRadioButton*>(sender());
+//     if (toggledButton && checked) {
+//         // Get the index of the toggled button
+//         int toggledIndex = toggledButton->objectName().right(1).toInt();
+
+//         // Get the correct option index for the current question
+//         int correctIndex = quizQuestions[currentQuestionIndex].correctOptionIndex;
+
+//         // Check if the toggled button's index matches the correct option index
+//         if (toggledIndex == correctIndex) {
+//             // Correct answer, change background to green
+//             toggledButton->setStyleSheet("background-color: green;");
+//         } else {
+//             // Wrong answer, change background to red
+//             toggledButton->setStyleSheet("background-color: red;");
+
+//             // Find and highlight the correct answer
+//             QRadioButton *correctButton = nullptr;
+
+//             switch (correctIndex) {
+//             case 1:
+//                 correctButton = ui->radioButton;
+//                 break;
+//             case 2:
+//                 correctButton = ui->radioButton_2;
+//                 break;
+//             case 3:
+//                 correctButton = ui->radioButton_3;
+//                 break;
+//             case 4:
+//                 correctButton = ui->radioButton_4;
+//                 break;
+//             }
+
+//             if (correctButton) {
+//                 correctButton->setStyleSheet("background-color: green;");
+//             }
+//         }
+
+//         // Disable all radio buttons for the current question
+//         ui->radioButton->setEnabled(false);
+//         ui->radioButton_2->setEnabled(false);
+//         ui->radioButton_3->setEnabled(false);
+//         ui->radioButton_4->setEnabled(false);
+//     }
+// }
+
+void MainScreen::onAnswerButtonToggled(bool checked)
+{
+    QRadioButton *toggledButton = qobject_cast<QRadioButton*>(sender());
+    if (toggledButton && checked) {
+        // Get the index of the toggled button
+        int toggledIndex = toggledButton->objectName().right(1).toInt();
+
+        // Get the correct option index for the current question
+        int correctIndex = quizQuestions[currentQuestionIndex].correctOptionIndex;
+
+        // Check if the toggled button's index matches the correct option index
+        if (toggledIndex == correctIndex) {
+            // Correct answer, increment the score
+            ++score;
+            updateScoreLabel();
+
+            // Change background to green
+            toggledButton->setStyleSheet("background-color: green;");
+        } else {
+            // Wrong answer, change background to red
+            toggledButton->setStyleSheet("background-color: red;");
+
+            // Find and highlight the correct answer
+            QRadioButton *correctButton = nullptr;
+
+            switch (correctIndex) {
+            case 1:
+                correctButton = ui->radioButton;
+                break;
+            case 2:
+                correctButton = ui->radioButton_2;
+                break;
+            case 3:
+                correctButton = ui->radioButton_3;
+                break;
+            case 4:
+                correctButton = ui->radioButton_4;
+                break;
+            }
+
+            if (correctButton) {
+                correctButton->setStyleSheet("background-color: green;");
+            }
+        }
+
+        // Disable all radio buttons for the current question
+        ui->radioButton->setEnabled(false);
+        ui->radioButton_2->setEnabled(false);
+        ui->radioButton_3->setEnabled(false);
+        ui->radioButton_4->setEnabled(false);
+    }
+}
+
+
+
 

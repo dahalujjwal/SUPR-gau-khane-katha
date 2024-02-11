@@ -929,6 +929,9 @@ font:700 40pt;
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
        <string>शार्प्नर</string>
       </property>
@@ -998,6 +1001,19 @@ font:700 40pt;
       </property>
       <property name="text">
        <string>&lt;center&gt;Score&lt;/center&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="demo_label">
+      <property name="geometry">
+       <rect>
+        <x>470</x>
+        <y>190</y>
+        <width>711</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Demo question, no score </string>
       </property>
      </widget>
     </widget>
