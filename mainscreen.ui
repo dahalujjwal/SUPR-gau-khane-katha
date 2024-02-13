@@ -24,7 +24,7 @@
       <x>0</x>
       <y>0</y>
       <width>1251</width>
-      <height>641</height>
+      <height>651</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -44,7 +44,10 @@ background-color: rgb(0, 136, 255);
 	border-image: url(:/password.jpg);
 }
 
-
+#label , #label_7
+{
+background-color:transparent;
+}
 
 QFrame
 {
@@ -81,7 +84,8 @@ border-radius : 4px;
 
 #signupFrame , #loginFrame
 {
-border: 2px solid rgb(44, 44, 44);
+
+background-color: rgba(255, 255, 255,0.7);
 }
 
 #welcome{
@@ -192,6 +196,31 @@ color :white;
 background-color: rgb(41, 206, 16);
 color :white;
 }
+
+
+#question
+{
+font-size:40px;
+}
+
+
+#exitPage
+{
+	border-image: url(:/welcomeBack.png);
+}
+
+#scoreLabel
+{
+border:1px solid black;
+}
+
+#scoreDisplay
+{
+border-image: url(:/welcomeBack.png);
+}
+
+
+
 
 
 
@@ -377,12 +406,12 @@ font: 14pt &quot;Segoe UI&quot;;</string>
         <string>SIGN UP</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="databaseStatus_l">
        <property name="geometry">
         <rect>
          <x>20</x>
          <y>460</y>
-         <width>141</width>
+         <width>231</width>
          <height>31</height>
         </rect>
        </property>
@@ -565,7 +594,7 @@ font: 14pt &quot;Segoe UI&quot;;</string>
         <string>LOGIN</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_11">
+      <widget class="QLabel" name="databaseStatus_s">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -889,9 +918,9 @@ font:700 40pt;
       <property name="geometry">
        <rect>
         <x>620</x>
-        <y>350</y>
-        <width>112</width>
-        <height>26</height>
+        <y>340</y>
+        <width>171</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="cursor">
@@ -905,9 +934,9 @@ font:700 40pt;
       <property name="geometry">
        <rect>
         <x>860</x>
-        <y>350</y>
-        <width>112</width>
-        <height>26</height>
+        <y>335</y>
+        <width>151</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="cursor">
@@ -921,9 +950,9 @@ font:700 40pt;
       <property name="geometry">
        <rect>
         <x>620</x>
-        <y>430</y>
-        <width>112</width>
-        <height>26</height>
+        <y>415</y>
+        <width>151</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="cursor">
@@ -940,9 +969,9 @@ font:700 40pt;
       <property name="geometry">
        <rect>
         <x>860</x>
-        <y>430</y>
-        <width>112</width>
-        <height>26</height>
+        <y>415</y>
+        <width>161</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="cursor">
@@ -987,55 +1016,110 @@ font:700 40pt;
        <string notr="true">font: 700 12pt ;</string>
       </property>
       <property name="text">
-       <string>Back</string>
+       <string>Exit</string>
       </property>
      </widget>
      <widget class="QLabel" name="scoreLabel">
       <property name="geometry">
        <rect>
-        <x>1080</x>
-        <y>30</y>
+        <x>1030</x>
+        <y>20</y>
         <width>121</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>&lt;center&gt;Score&lt;/center&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="demo_label">
-      <property name="geometry">
-       <rect>
-        <x>470</x>
-        <y>190</y>
-        <width>711</width>
         <height>41</height>
        </rect>
       </property>
       <property name="text">
-       <string>Demo question, no score </string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Score&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="resultPage">
+    <widget class="QWidget" name="scoreDisplay">
      <property name="styleSheet">
-      <string notr="true">background-image: url(:/welcomeBack.png);</string>
+      <string notr="true"/>
      </property>
-     <widget class="QLabel" name="label_14">
+     <widget class="QLabel" name="scoreLabel_2">
       <property name="geometry">
        <rect>
-        <x>560</x>
-        <y>30</y>
-        <width>141</width>
+        <x>470</x>
+        <y>40</y>
+        <width>341</width>
         <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);
-font: 700 16pt &quot;Segoe UI&quot;;</string>
+       <string notr="true">font: 700 16pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);
+background-color: rgb(255, 124, 17);
+border:1px solid black;</string>
       </property>
       <property name="text">
-       <string>&lt;center&gt;Result&lt;/center&gt;</string>
+       <string>&lt;center&gt;Score &lt;/center&gt;</string>
+      </property>
+     </widget>
+     <widget class="QTableView" name="scoreTable">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>140</y>
+        <width>951</width>
+        <height>471</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+background-color: rgba(255, 255, 255,0.7);</string>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>125</number>
+      </attribute>
+     </widget>
+     <widget class="QLabel" name="name_1">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>220</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Name&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="score_1">
+      <property name="geometry">
+       <rect>
+        <x>750</x>
+        <y>220</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Score&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="exitPage">
+     <widget class="QLabel" name="thankU">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>250</y>
+        <width>831</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:transparent;
+font:700 40pt;
+	color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Thank You&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </widget>

@@ -6,6 +6,7 @@
 #include <vector>
 #include <QLabel>
 #include <QRadioButton>
+#include <QSqlDatabase>
 
 
 QT_BEGIN_NAMESPACE
@@ -27,6 +28,7 @@ class MainScreen : public QMainWindow
 public:
     MainScreen(QWidget *parent = nullptr);
     ~MainScreen();
+    void displayUserScores();
 
 private slots:
     void on_loginBtn_clicked();
@@ -57,7 +59,11 @@ private slots:
     void onAnswerButtonToggled(bool checked);
 
 private:
+// public:
     Ui::MainScreen *ui;
+
+    QSqlDatabase mydb;
+
     std::vector<QuizQuestion> quizQuestions;
     int currentQuestionIndex;
     int score;
