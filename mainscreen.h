@@ -29,6 +29,10 @@ public:
     MainScreen(QWidget *parent = nullptr);
     ~MainScreen();
     void displayUserScores();
+    QString sendEmail(int);
+    int sendId();
+    int userId;
+    void displayScores();
 
 private slots:
     void on_loginBtn_clicked();
