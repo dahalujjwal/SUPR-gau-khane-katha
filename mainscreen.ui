@@ -152,7 +152,6 @@ color :white;
 #question
 {
 background:transparent;
-font:700 30pt;
 	color: rgb(255, 255, 255);
 }
 
@@ -904,11 +903,14 @@ font:700 40pt;
      <widget class="QLabel" name="question">
       <property name="geometry">
        <rect>
-        <x>470</x>
-        <y>210</y>
+        <x>530</x>
+        <y>200</y>
         <width>831</width>
         <height>111</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:700 20pt;</string>
       </property>
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;टाउकोले लेख्ने, पुच्छरले मेटने, के हो ?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -917,8 +919,8 @@ font:700 40pt;
      <widget class="QRadioButton" name="radioButton">
       <property name="geometry">
        <rect>
-        <x>620</x>
-        <y>340</y>
+        <x>590</x>
+        <y>355</y>
         <width>171</width>
         <height>41</height>
        </rect>
@@ -933,8 +935,8 @@ font:700 40pt;
      <widget class="QRadioButton" name="radioButton_2">
       <property name="geometry">
        <rect>
-        <x>860</x>
-        <y>335</y>
+        <x>830</x>
+        <y>350</y>
         <width>151</width>
         <height>41</height>
        </rect>
@@ -949,8 +951,8 @@ font:700 40pt;
      <widget class="QRadioButton" name="radioButton_3">
       <property name="geometry">
        <rect>
-        <x>620</x>
-        <y>415</y>
+        <x>590</x>
+        <y>430</y>
         <width>151</width>
         <height>41</height>
        </rect>
@@ -968,8 +970,8 @@ font:700 40pt;
      <widget class="QRadioButton" name="radioButton_4">
       <property name="geometry">
        <rect>
-        <x>860</x>
-        <y>415</y>
+        <x>830</x>
+        <y>430</y>
         <width>161</width>
         <height>41</height>
        </rect>
@@ -1076,30 +1078,66 @@ background-color: rgba(255, 255, 255,0.7);</string>
        <number>125</number>
       </attribute>
      </widget>
-     <widget class="QLabel" name="name_1">
+     <widget class="QLabel" name="highscoreData">
       <property name="geometry">
        <rect>
-        <x>290</x>
-        <y>220</y>
-        <width>171</width>
-        <height>31</height>
+        <x>440</x>
+        <y>500</y>
+        <width>451</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Name&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Your Score is : &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="score_1">
+     <widget class="QLabel" name="scoreData">
       <property name="geometry">
        <rect>
-        <x>750</x>
-        <y>220</y>
-        <width>171</width>
-        <height>31</height>
+        <x>440</x>
+        <y>290</y>
+        <width>451</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Score&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Your Score is : &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="highscoreData_2">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>430</y>
+        <width>451</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:none;
+font: 700 20pt &quot;Segoe UI&quot;;
+color: rgb(0, 4, 255);</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;HIGHSCORE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="highscoreData_3">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>220</y>
+        <width>451</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:none;
+font: 700 20pt &quot;Segoe UI&quot;;
+color: rgb(0, 4, 255);</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;YOUR SCORE &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </widget>

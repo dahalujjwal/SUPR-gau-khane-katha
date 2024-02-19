@@ -3,6 +3,7 @@
 #include <QString>
 #include <QDebug>
 #include <QLabel>
+#include <QTextEdit>
 
 #include "database.h"
 
@@ -24,6 +25,7 @@ thank you page : 7
 
 #include <iostream>
 using namespace std;
+
 
 
 MainScreen::MainScreen(QWidget *parent)
@@ -66,10 +68,13 @@ MainScreen::~MainScreen()
 void MainScreen::loadQuizQuestions()
 {
     QuizQuestion question1 = {"टाउकोले लेख्ने, पुच्छरले मेटने, के हो ?", {"इस्केल", "इरेजर", "शार्प्नर", "पेन्सिल"}, 4};
-    QuizQuestion question2 = {"What is the nickname of Ujjwal ? ", {"Bright", "Brightness", "Dahal", "Light"}, 2};
-    QuizQuestion question3 = {"Question 3", {"option a45", "OPtion b45", "option b45", "optiond45"}, 3};
-    QuizQuestion question4 = {"Question 4", {"option d4", "OPtion d5", "option e4", "option e5"}, 4};
-    quizQuestions = {question1, question2, question3, question4};
+    QuizQuestion question2 = {"जसले किन्छ उसले राख्दैन, जसले राख्छ उसले किन्दैन, के हो ? ", {"उपहार", "रुमाल", "कलम", "प्रसाद"}, 1};
+    QuizQuestion question3 = {"लामो लामो लहरामा फल्ने मिठो फल खाँदा मुखभरि जल नै जल, के हो ? ", {"तरबुजा", "लिच्ची", "अंगुर", "खरबुजा"}, 3};
+    QuizQuestion question4 = {"खिरिलो साँढेको जिउ भरि काडाई काँडा, के हो ? ", {"तिते करेला", "ऐसेलु", "धतुर", "लिच्ची"}, 1};
+    QuizQuestion question5 = {"जति तान्यो त्यति सानो हुने, के हो ? ", {"खाल्डो", "सलाई", "मैन बत्ती", "चुरोट"}, 4};
+    QuizQuestion question6= {"छोड छोड बुडी म अगी जान्छु, के हो ?", {"गाडी", "लौरो", "खोला", "आगो"}, 2};
+
+    quizQuestions = {question1, question2, question3, question4, question5, question6};
 }
 
 void MainScreen::displayCurrentQuestion()
@@ -103,6 +108,7 @@ void MainScreen::displayCurrentQuestion()
 
 void MainScreen::updateScoreLabel()
 {
+    // ui->scoreLabel->setStyleSheet("font : 500 ;");
     ui->scoreLabel->setText("Score: " + QString::number(score));
     ui->scoreLabel->setAlignment(Qt::AlignCenter);
 }
@@ -125,9 +131,6 @@ void MainScreen::on_signupBtn_clicked()
         return;
     }
 
-    // Start a transaction
-    // mydb.transaction();
-
     QSqlQuery crdQuery;
     crdQuery.prepare("INSERT INTO credentials (email, password) VALUES (:email, :password)");
     QByteArray hashedPassword = QCryptographicHash::hash(signupPw.toUtf8(), QCryptographicHash::Sha256);
@@ -140,6 +143,9 @@ void MainScreen::on_signupBtn_clicked()
     {
         int userId = crdQuery.lastInsertId().toInt();
 
+        // Save the user ID for later use
+        this->userId = userId;
+
         QSqlQuery query;
         query.prepare("INSERT INTO userinfo (id, first_name, last_name) VALUES (:id, :firstName, :lastName)");
         query.bindValue(":id", userId);
@@ -150,23 +156,16 @@ void MainScreen::on_signupBtn_clicked()
         {
             ui->databaseStatus_s->setStyleSheet("color: red; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
             ui->databaseStatus_s->setText("Unsuccessful...");
-            // // Rollback the transaction if insertion failed
-            // mydb.rollback();
         }
         else
         {
-            // Commit the transaction if insertion successful
-            // mydb.commit();
             ui->databaseStatus_s->setStyleSheet("color: green; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
             ui->databaseStatus_s->setText("Signup Successful...");
         }
     }
     else
     {
-        // qDebug() << "Error executing query:" << crdQuery.lastError().text();
         QMessageBox::information(this,"Error executing query",crdQuery.lastError().text());
-        // Rollback the transaction if insertion failed
-        // mydb.rollback();
     }
 
     // Close the database connection
@@ -363,7 +362,9 @@ void MainScreen::on_backBtn2_clicked()
 
 void MainScreen::on_nextBtn_clicked()
 {
-    bool scoreUpdated=false;
+    int totalQuestions = 6;
+
+    bool scoreUpdated = false;
     // ui->demo_label->hide();
     ui->radioButton->setStyleSheet("background-color: none;");
     ui->radioButton_2->setStyleSheet("background-color: none;");
@@ -382,28 +383,28 @@ void MainScreen::on_nextBtn_clicked()
     ui->radioButton_4->setEnabled(false);
 
     for (int i = 0; i < 4; ++i) {
-        QRadioButton* radioButton = nullptr;
+        QRadioButton* myRadioButton = nullptr;
 
         // Determine which radio button to check based on the loop index
         switch (i) {
         case 0:
-            radioButton = ui->radioButton;
+            myRadioButton = ui->radioButton;
             break;
         case 1:
-            radioButton = ui->radioButton_2;
+            myRadioButton = ui->radioButton_2;
             break;
         case 2:
-            radioButton = ui->radioButton_3;
+            myRadioButton = ui->radioButton_3;
             break;
         case 3:
-            radioButton = ui->radioButton_4;
+            myRadioButton = ui->radioButton_4;
             break;
         }
 
         // Check if the current radio button is checked and matches the correct option index
-        if (radioButton && radioButton->isChecked() && i == quizQuestions[currentQuestionIndex].correctOptionIndex && !scoreUpdated) {
+        if (myRadioButton->isChecked() && i == quizQuestions[currentQuestionIndex].correctOptionIndex ) {
             // Increment the score because the user selected the correct answer
-            // score++;
+            score++;
             scoreUpdated = true;  // Set the flag to true to avoid incrementing the score multiple times
             break;  // Exit the loop since we found the correct answer
         }
@@ -419,56 +420,43 @@ void MainScreen::on_nextBtn_clicked()
     ui->radioButton_2->setEnabled(true);
     ui->radioButton_3->setEnabled(true);
     ui->radioButton_4->setEnabled(true);
+
+    // Check if all questions have been answered
+    if (currentQuestionIndex == totalQuestions) {
+        // All questions answered, display total score and email
+        QString userEmail = ui->signupEmail->text(); // Assuming the user's email is stored during signup
+        int userScore = score;
+        mydb.open();
+        // Insert score and email into the "score" table
+        QSqlQuery insertScoreQuery;
+        insertScoreQuery.prepare("INSERT INTO score (email, score) VALUES (:email, :score)");
+        insertScoreQuery.bindValue(":email", userEmail);
+        insertScoreQuery.bindValue(":score", userScore);
+        if (insertScoreQuery.exec()) {
+            qDebug() << "Score and Email inserted successfully";
+        } else {
+            qDebug() << "Failed to insert score and email:" << insertScoreQuery.lastError().text();
+        }
+
+        // Display total score on the display screen
+        ui->scoreData->setStyleSheet("Color : red; font : 700 20px;background-color : white;");
+        ui->scoreData->setText("      Your Score: " + QString::number(score));
+
+        // Display high score
+        QSqlQuery highScoreQuery("SELECT email, MAX(score) FROM score GROUP BY email ORDER BY MAX(score) DESC LIMIT 1");
+        if (highScoreQuery.exec() && highScoreQuery.next()) {
+            QString highScoreEmail = highScoreQuery.value(0).toString();
+            int highScore = highScoreQuery.value(1).toInt();
+
+            ui->highscoreData->setStyleSheet("Color : green; font : 700 20px;background-color : white;");
+            ui->highscoreData->setText("      Email : " + highScoreEmail + "            Score: " + QString::number(highScore));
+        } else {
+            qDebug() << "Failed to retrieve high score:" << highScoreQuery.lastError().text();
+        }
+
+        mydb.close();
+    }
 }
-
-// void MainScreen::onAnswerButtonToggled(bool checked)
-// {
-//     QRadioButton *toggledButton = qobject_cast<QRadioButton*>(sender());
-//     if (toggledButton && checked) {
-//         // Get the index of the toggled button
-//         int toggledIndex = toggledButton->objectName().right(1).toInt();
-
-//         // Get the correct option index for the current question
-//         int correctIndex = quizQuestions[currentQuestionIndex].correctOptionIndex;
-
-//         // Check if the toggled button's index matches the correct option index
-//         if (toggledIndex == correctIndex) {
-//             // Correct answer, change background to green
-//             toggledButton->setStyleSheet("background-color: green;");
-//         } else {
-//             // Wrong answer, change background to red
-//             toggledButton->setStyleSheet("background-color: red;");
-
-//             // Find and highlight the correct answer
-//             QRadioButton *correctButton = nullptr;
-
-//             switch (correctIndex) {
-//             case 1:
-//                 correctButton = ui->radioButton;
-//                 break;
-//             case 2:
-//                 correctButton = ui->radioButton_2;
-//                 break;
-//             case 3:
-//                 correctButton = ui->radioButton_3;
-//                 break;
-//             case 4:
-//                 correctButton = ui->radioButton_4;
-//                 break;
-//             }
-
-//             if (correctButton) {
-//                 correctButton->setStyleSheet("background-color: green;");
-//             }
-//         }
-
-//         // Disable all radio buttons for the current question
-//         ui->radioButton->setEnabled(false);
-//         ui->radioButton_2->setEnabled(false);
-//         ui->radioButton_3->setEnabled(false);
-//         ui->radioButton_4->setEnabled(false);
-//     }
-// }
 
 void MainScreen::onAnswerButtonToggled(bool checked)
 {
@@ -483,7 +471,7 @@ void MainScreen::onAnswerButtonToggled(bool checked)
         // Check if the toggled button's index matches the correct option index
         if (toggledIndex == correctIndex) {
             // Correct answer, increment the score
-            ++score;
+            score++;
             updateScoreLabel();
 
             // Change background to green
