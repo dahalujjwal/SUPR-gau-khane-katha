@@ -55,19 +55,19 @@ MainScreen::MainScreen(QWidget *parent)
 
     //connecting mysql database
     mydb = QSqlDatabase::addDatabase("QMYSQL");
-    mydb.setHostName("localhost");
+    mydb.setHostName("127.0.0.1");
     mydb.setUserName("root");
-    mydb.setPassword("");
+    mydb.setPassword("root");
     mydb.setDatabaseName("supr");
 
-    if(mydb.open())
-    {
-        qDebug() << "Database is Connected";
-    }
-    else
-    {
-        qDebug() << "Database is not connected ";
-    }
+    // if(mydb.open())
+    // {
+    //     qDebug() << "Database is Connected";
+    // }
+    // else
+    // {
+    //     qDebug() << "Database is not connected ";
+    // }
 
 
 }
@@ -145,8 +145,15 @@ void MainScreen::on_signupBtn_clicked()
 
     QSqlQuery crdQuery;
     crdQuery.prepare("INSERT INTO credentials (email, password) VALUES (:email, :password)");
+    QByteArray hashedPassword = QCryptographicHash::hash(signupPw.toUtf8(), QCryptographicHash::Sha256);
+    QString hashedPasswordHex = QString(hashedPassword.toHex());
+
     crdQuery.bindValue(":email", signupEmail);
+<<<<<<< HEAD
     crdQuery.bindValue(":password", hashedPassword);
+=======
+    crdQuery.bindValue(":password", hashedPasswordHex);
+>>>>>>> ab315b99d6d6dd477d609bbc3382b392d04d867a
 
     if(crdQuery.exec())
     {
@@ -181,6 +188,97 @@ void MainScreen::on_signupBtn_clicked()
     mydb.close();
 }
 
+
+// void MainScreen::on_loginBtn_clicked()
+// {
+//     // QString loginEmail = ui->loginEmail->text();
+//     // QString loginPw = ui->loginPw->text();
+
+
+//        ui->stackedWidget->setCurrentIndex(2);
+
+//     // QSqlDatabase mydb;
+//     //    mydb= QSqlDatabase::addDatabase("QMYSQL");
+//     //    mydb.setHostName("localhost");
+//     //    mydb.setUserName("root");
+//     //    mydb.setPassword("");
+//     //    mydb.setDatabaseName("supr");
+//     //    mydb.setPort(3036);
+
+//     //    if(mydb.open())
+//     //    {
+//     //        ui->databaseStatus_l->setText("Successful Connection");
+//     //    }
+//     //    else
+//     //    {
+
+//     //        ui->databaseStatus_l->setText("Unsuccessful Connection");
+//     //    }
+
+// }
+
+// void MainScreen::displayUserScores()
+// {
+//     // Clear previous data
+//     // ui->scoreTable->clear();
+
+//     // Open the database connection
+//     if (!mydb.open()) {
+//         qDebug() << "Error opening database connection:" << mydb.lastError().text();
+//         return;
+//     }
+
+//     // Execute the SELECT query
+//     QSqlQuery query("SELECT email, score FROM score", mydb);
+
+//     // Iterate over the results and display them
+//     while (query.next()) {
+//         QString email = query.value(0).toString();
+//         int score = query.value(1).toInt();
+
+//         // Display email and score in a QListWidget
+//         QString itemText = QString("%1: %2").arg(email).arg(score);
+//         ui->scoreTable->addItem(itemText);
+//     }
+
+//     // Close the database connection
+//     mydb.close();
+// }
+
+
+// void MainScreen::on_loginBtn_clicked()
+// {
+//     mydb.open();
+//     // Getting data from user
+//     QString loginEmail = ui->loginEmail->text();
+//     QString loginPw = ui->loginPw->text();
+
+//     // Verify credentials
+//     QSqlQuery verifyUser;
+//     verifyUser.prepare("SELECT user_id FROM credentials WHERE email = :email AND password = :password");
+//     verifyUser.bindValue(":email", loginEmail);
+//     verifyUser.bindValue(":password", loginPw);
+
+//     if (verifyUser.exec() && verifyUser.next()) {
+//         // Login successful
+//         int userId = verifyUser.value("user_id").toInt();
+//         qDebug() << "User ID:" << userId;
+
+//         ui->databaseStatus_s->setStyleSheet("color: green; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
+//         ui->databaseStatus_s->setText("Login Successful...");
+
+//         // Redirect user to the appropriate page or perform other actions
+//         ui->stackedWidget->setCurrentIndex(2);
+//     } else {
+//         // Login failed
+//         ui->databaseStatus_l->setStyleSheet("color: red; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
+//         ui->databaseStatus_l->setText("Invalid credentials");
+
+//         qDebug() << "Invalid credentials";
+//     }
+//     mydb.close();
+// }
+
 void MainScreen::on_loginBtn_clicked()
 {
     mydb.open();
@@ -188,6 +286,7 @@ void MainScreen::on_loginBtn_clicked()
     QString loginEmail = ui->loginEmail->text();
     QString loginPw = ui->loginPw->text();
 
+<<<<<<< HEAD
     QString loginHashedPassword = hashPassword(loginPw);
 
     // Verify credentials
@@ -195,24 +294,48 @@ void MainScreen::on_loginBtn_clicked()
     verifyUser.prepare("SELECT user_id FROM credentials WHERE email = :email AND password = :password");
     verifyUser.bindValue(":email", loginEmail);
     verifyUser.bindValue(":password", loginHashedPassword); // Bind hashed password
+=======
+    // Retrieve hashed password from the database
+    QSqlQuery getPasswordQuery;
+    getPasswordQuery.prepare("SELECT password FROM credentials WHERE email = :email");
+    getPasswordQuery.bindValue(":email", loginEmail);
+>>>>>>> ab315b99d6d6dd477d609bbc3382b392d04d867a
 
-    if (verifyUser.exec() && verifyUser.next()) {
-        // Login successful
-        int userId = verifyUser.value("user_id").toInt();
-        qDebug() << "User ID:" << userId;
+    if (getPasswordQuery.exec() && getPasswordQuery.next()) {
+        QString storedHashedPassword = getPasswordQuery.value("password").toString();
 
-        ui->databaseStatus_s->setStyleSheet("color: green; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
-        ui->databaseStatus_s->setText("Login Successful...");
+        // Hash the entered password for comparison
+        QByteArray enteredPasswordHash = QCryptographicHash::hash(loginPw.toUtf8(), QCryptographicHash::Sha256);
+        QString enteredPasswordHashHex = QString(enteredPasswordHash.toHex());
 
-        // Redirect user to the appropriate page or perform other actions
-        ui->stackedWidget->setCurrentIndex(2);
+        // Verify credentials
+        if (storedHashedPassword == enteredPasswordHashHex) {
+            // Login successful
+            qDebug() << "Login Successful";
+
+            int userId = getPasswordQuery.value("user_id").toInt();
+            qDebug() << "User ID:" << userId;
+
+            ui->databaseStatus_s->setStyleSheet("color: green; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
+            ui->databaseStatus_s->setText("Login Successful...");
+
+            // Redirect user to the appropriate page or perform other actions
+            ui->stackedWidget->setCurrentIndex(2);
+        } else {
+            // Login failed
+            ui->databaseStatus_l->setStyleSheet("color: red; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
+            ui->databaseStatus_l->setText("Invalid credentials");
+
+            qDebug() << "Invalid credentials";
+        }
     } else {
-        // Login failed
+        // Email not found in the database
         ui->databaseStatus_l->setStyleSheet("color: red; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
         ui->databaseStatus_l->setText("Invalid credentials");
 
         qDebug() << "Invalid credentials";
     }
+
     mydb.close();
 }
 

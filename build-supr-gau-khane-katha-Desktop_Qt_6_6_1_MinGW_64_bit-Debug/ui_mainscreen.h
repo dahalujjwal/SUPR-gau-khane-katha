@@ -13,12 +13,14 @@
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStackedWidget>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -39,7 +41,7 @@ public:
     QLabel *label_4;
     QLabel *label_5;
     QPushButton *signupLink;
-    QLabel *label_6;
+    QLabel *databaseStatus_l;
     QLabel *alertMsg2;
     QWidget *signupPage;
     QFrame *signupFrame;
@@ -51,7 +53,7 @@ public:
     QLabel *label_9;
     QLabel *label_10;
     QPushButton *loginLink;
-    QLabel *label_11;
+    QLabel *databaseStatus_s;
     QLabel *alertMsg;
     QLabel *label_12;
     QLineEdit *firstName;
@@ -80,8 +82,13 @@ public:
     QPushButton *nextBtn;
     QPushButton *backBtn2;
     QLabel *scoreLabel;
-    QWidget *resultPage;
-    QLabel *label_14;
+    QWidget *scoreDisplay;
+    QLabel *scoreLabel_2;
+    QTableView *scoreTable;
+    QLabel *name_1;
+    QLabel *score_1;
+    QWidget *exitPage;
+    QLabel *thankU;
 
     void setupUi(QMainWindow *MainScreen)
     {
@@ -95,7 +102,7 @@ public:
         centralwidget->setObjectName("centralwidget");
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
-        stackedWidget->setGeometry(QRect(0, 0, 1251, 641));
+        stackedWidget->setGeometry(QRect(0, 0, 1251, 651));
         stackedWidget->setStyleSheet(QString::fromUtf8("*{\n"
 "font-family : century gothic;\n"
 "font-size: 24px;\n"
@@ -112,7 +119,10 @@ public:
 "	border-image: url(:/password.jpg);\n"
 "}\n"
 "\n"
-"\n"
+"#label , #label_7\n"
+"{\n"
+"background-color:transparent;\n"
+"}\n"
 "\n"
 "QFrame\n"
 "{\n"
@@ -149,7 +159,8 @@ public:
 "\n"
 "#signupFrame , #loginFrame\n"
 "{\n"
-"border: 2px solid rgb(44, 44, 44);\n"
+"\n"
+"background-color: rgba(255, 255, 255,0.7);\n"
 "}\n"
 "\n"
 "#welcome{\n"
@@ -158,12 +169,12 @@ public:
 "}\n"
 "\n"
 "#supr{\n"
-"background:transparent;\n"
+"backgro"
+                        "und:transparent;\n"
 "font:700 40pt;\n"
 "	color: rgb(255, 255, 255);\n"
 "}\n"
-""
-                        "\n"
+"\n"
 "#startBtn{\n"
 "	background-color: #FF6E1F;\n"
 "color:white;\n"
@@ -224,15 +235,15 @@ public:
 "QRadioButton\n"
 "{\n"
 "background-color:transparent;\n"
-"	font: 700 17pt \"Segoe UI\";\n"
+"	font: 700 17pt \"Segoe"
+                        " UI\";\n"
 "color:white;\n"
 "}\n"
 "\n"
 "\n"
 "#nextBtn\n"
 "{\n"
-"	background-col"
-                        "or: rgb(29, 63, 255);\n"
+"	background-color: rgb(29, 63, 255);\n"
 "}\n"
 "\n"
 "#nextBtn:hover\n"
@@ -262,6 +273,31 @@ public:
 "background-color: rgb(41, 206, 16);\n"
 "color :white;\n"
 "}\n"
+"\n"
+"\n"
+"#question\n"
+"{\n"
+"font-size:40px;\n"
+"}\n"
+"\n"
+"\n"
+"#exitPage\n"
+"{\n"
+"	border-image: url(:/welcomeBack.png);\n"
+"}\n"
+"\n"
+"#scoreLabel\n"
+"{\n"
+"border:1px solid black;\n"
+"}\n"
+"\n"
+"#scoreDisplay\n"
+"{\n"
+"border-image: url(:/welcomeBack.png);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -325,10 +361,10 @@ public:
 "font: 12pt;\n"
 "color : black;\n"
 "font: 14pt \"Segoe UI\";"));
-        label_6 = new QLabel(loginFrame);
-        label_6->setObjectName("label_6");
-        label_6->setGeometry(QRect(20, 460, 141, 31));
-        label_6->setStyleSheet(QString::fromUtf8("background: transparent;\n"
+        databaseStatus_l = new QLabel(loginFrame);
+        databaseStatus_l->setObjectName("databaseStatus_l");
+        databaseStatus_l->setGeometry(QRect(20, 460, 231, 31));
+        databaseStatus_l->setStyleSheet(QString::fromUtf8("background: transparent;\n"
 "font: 700 9.5pt \"Segoe UI\";"));
         alertMsg2 = new QLabel(loginFrame);
         alertMsg2->setObjectName("alertMsg2");
@@ -383,10 +419,10 @@ public:
 "font: 12pt;\n"
 "color : black;\n"
 "font: 14pt \"Segoe UI\";"));
-        label_11 = new QLabel(signupFrame);
-        label_11->setObjectName("label_11");
-        label_11->setGeometry(QRect(20, 520, 141, 31));
-        label_11->setStyleSheet(QString::fromUtf8("background: transparent;\n"
+        databaseStatus_s = new QLabel(signupFrame);
+        databaseStatus_s->setObjectName("databaseStatus_s");
+        databaseStatus_s->setGeometry(QRect(20, 520, 141, 31));
+        databaseStatus_s->setStyleSheet(QString::fromUtf8("background: transparent;\n"
 "font: 700 9.5pt \"Segoe UI\";"));
         alertMsg = new QLabel(signupFrame);
         alertMsg->setObjectName("alertMsg");
@@ -488,19 +524,20 @@ public:
         question->setGeometry(QRect(470, 210, 831, 111));
         radioButton = new QRadioButton(questionOne);
         radioButton->setObjectName("radioButton");
-        radioButton->setGeometry(QRect(620, 350, 112, 26));
+        radioButton->setGeometry(QRect(620, 340, 171, 41));
         radioButton->setCursor(QCursor(Qt::PointingHandCursor));
         radioButton_2 = new QRadioButton(questionOne);
         radioButton_2->setObjectName("radioButton_2");
-        radioButton_2->setGeometry(QRect(860, 350, 112, 26));
+        radioButton_2->setGeometry(QRect(860, 335, 151, 41));
         radioButton_2->setCursor(QCursor(Qt::PointingHandCursor));
         radioButton_3 = new QRadioButton(questionOne);
         radioButton_3->setObjectName("radioButton_3");
-        radioButton_3->setGeometry(QRect(620, 430, 112, 26));
+        radioButton_3->setGeometry(QRect(620, 415, 151, 41));
         radioButton_3->setCursor(QCursor(Qt::PointingHandCursor));
+        radioButton_3->setStyleSheet(QString::fromUtf8(""));
         radioButton_4 = new QRadioButton(questionOne);
         radioButton_4->setObjectName("radioButton_4");
-        radioButton_4->setGeometry(QRect(860, 430, 112, 26));
+        radioButton_4->setGeometry(QRect(860, 415, 161, 41));
         radioButton_4->setCursor(QCursor(Qt::PointingHandCursor));
         nextBtn = new QPushButton(questionOne);
         nextBtn->setObjectName("nextBtn");
@@ -514,17 +551,41 @@ public:
         backBtn2->setStyleSheet(QString::fromUtf8("font: 700 12pt ;"));
         scoreLabel = new QLabel(questionOne);
         scoreLabel->setObjectName("scoreLabel");
-        scoreLabel->setGeometry(QRect(1080, 30, 121, 31));
+        scoreLabel->setGeometry(QRect(1030, 20, 121, 41));
         stackedWidget->addWidget(questionOne);
-        resultPage = new QWidget();
-        resultPage->setObjectName("resultPage");
-        resultPage->setStyleSheet(QString::fromUtf8("background-image: url(:/welcomeBack.png);"));
-        label_14 = new QLabel(resultPage);
-        label_14->setObjectName("label_14");
-        label_14->setGeometry(QRect(560, 30, 141, 51));
-        label_14->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
-"font: 700 16pt \"Segoe UI\";"));
-        stackedWidget->addWidget(resultPage);
+        scoreDisplay = new QWidget();
+        scoreDisplay->setObjectName("scoreDisplay");
+        scoreDisplay->setStyleSheet(QString::fromUtf8(""));
+        scoreLabel_2 = new QLabel(scoreDisplay);
+        scoreLabel_2->setObjectName("scoreLabel_2");
+        scoreLabel_2->setGeometry(QRect(470, 40, 341, 51));
+        scoreLabel_2->setStyleSheet(QString::fromUtf8("font: 700 16pt \"Segoe UI\";\n"
+"color: rgb(255, 255, 255);\n"
+"background-color: rgb(255, 124, 17);\n"
+"border:1px solid black;"));
+        scoreTable = new QTableView(scoreDisplay);
+        scoreTable->setObjectName("scoreTable");
+        scoreTable->setGeometry(QRect(150, 140, 951, 471));
+        scoreTable->setStyleSheet(QString::fromUtf8("\n"
+"background-color: rgba(255, 255, 255,0.7);"));
+        scoreTable->horizontalHeader()->setCascadingSectionResizes(false);
+        scoreTable->horizontalHeader()->setDefaultSectionSize(125);
+        name_1 = new QLabel(scoreDisplay);
+        name_1->setObjectName("name_1");
+        name_1->setGeometry(QRect(290, 220, 171, 31));
+        score_1 = new QLabel(scoreDisplay);
+        score_1->setObjectName("score_1");
+        score_1->setGeometry(QRect(750, 220, 171, 31));
+        stackedWidget->addWidget(scoreDisplay);
+        exitPage = new QWidget();
+        exitPage->setObjectName("exitPage");
+        thankU = new QLabel(exitPage);
+        thankU->setObjectName("thankU");
+        thankU->setGeometry(QRect(210, 250, 831, 111));
+        thankU->setStyleSheet(QString::fromUtf8("background:transparent;\n"
+"font:700 40pt;\n"
+"	color: rgb(255, 255, 255);"));
+        stackedWidget->addWidget(exitPage);
         MainScreen->setCentralWidget(centralwidget);
 
         retranslateUi(MainScreen);
@@ -542,7 +603,7 @@ public:
         label_4->setText(QCoreApplication::translate("MainScreen", "Forgot Password?", nullptr));
         label_5->setText(QCoreApplication::translate("MainScreen", "Need an account?", nullptr));
         signupLink->setText(QCoreApplication::translate("MainScreen", "SIGN UP", nullptr));
-        label_6->setText(QCoreApplication::translate("MainScreen", "Database Status...", nullptr));
+        databaseStatus_l->setText(QCoreApplication::translate("MainScreen", "Database Status...", nullptr));
         alertMsg2->setText(QCoreApplication::translate("MainScreen", "<html><head/><body><p align=\"center\"><br/></p></body></html>", nullptr));
         label_7->setText(QCoreApplication::translate("MainScreen", "SIGN UP", nullptr));
         signupBtn->setText(QCoreApplication::translate("MainScreen", "SIGN UP", nullptr));
@@ -550,7 +611,7 @@ public:
         label_9->setText(QCoreApplication::translate("MainScreen", "Password", nullptr));
         label_10->setText(QCoreApplication::translate("MainScreen", "Already have account?", nullptr));
         loginLink->setText(QCoreApplication::translate("MainScreen", "LOGIN", nullptr));
-        label_11->setText(QCoreApplication::translate("MainScreen", "Database Status...", nullptr));
+        databaseStatus_s->setText(QCoreApplication::translate("MainScreen", "Database Status...", nullptr));
         alertMsg->setText(QCoreApplication::translate("MainScreen", "<html><head/><body><p align=\"center\"><br/></p></body></html>", nullptr));
         label_12->setText(QCoreApplication::translate("MainScreen", "First Name", nullptr));
         label_13->setText(QCoreApplication::translate("MainScreen", "Last Name", nullptr));
@@ -571,9 +632,12 @@ public:
         radioButton_3->setText(QCoreApplication::translate("MainScreen", "\340\244\266\340\244\276\340\244\260\340\245\215\340\244\252\340\245\215\340\244\250\340\244\260", nullptr));
         radioButton_4->setText(QCoreApplication::translate("MainScreen", "\340\244\252\340\245\207\340\244\250\340\245\215\340\244\270\340\244\277\340\244\262", nullptr));
         nextBtn->setText(QCoreApplication::translate("MainScreen", "Next", nullptr));
-        backBtn2->setText(QCoreApplication::translate("MainScreen", "Back", nullptr));
-        scoreLabel->setText(QCoreApplication::translate("MainScreen", "<center>Score</center>", nullptr));
-        label_14->setText(QCoreApplication::translate("MainScreen", "<center>Result</center>", nullptr));
+        backBtn2->setText(QCoreApplication::translate("MainScreen", "Exit", nullptr));
+        scoreLabel->setText(QCoreApplication::translate("MainScreen", "<html><head/><body><p align=\"center\"><span style=\" font-weight:700;\">Score</span></p></body></html>", nullptr));
+        scoreLabel_2->setText(QCoreApplication::translate("MainScreen", "<center>Score </center>", nullptr));
+        name_1->setText(QCoreApplication::translate("MainScreen", "<html><head/><body><p align=\"center\"><span style=\" font-weight:700;\">Name</span></p></body></html>", nullptr));
+        score_1->setText(QCoreApplication::translate("MainScreen", "<html><head/><body><p align=\"center\"><span style=\" font-weight:700;\">Score</span></p></body></html>", nullptr));
+        thankU->setText(QCoreApplication::translate("MainScreen", "<html><head/><body><p align=\"center\">Thank You</p></body></html>", nullptr));
     } // retranslateUi
 
 };

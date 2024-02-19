@@ -8,7 +8,7 @@
 //     QSqlDatabase mydb = QSqlDatabase::addDatabase("MYSQL");
 //     mydb.setHostName("localhost");
 //     mydb.setDatabaseName("supr");
-//     mydb.setPassword("");
+//     mydb.setPassword("root");
 //     mydb.setUserName("root");
 //     mydb.setPort(3036);
 
