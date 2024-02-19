@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QLabel>
 #include <QTextEdit>
+#include <QCryptographicHash>
 
 #include "database.h"
 
@@ -27,6 +28,16 @@ thank you page : 7
 using namespace std;
 
 
+QString hashPassword(const QString &password) {
+    QByteArray passwordByteArray = password.toUtf8();
+    QByteArray hash = QCryptographicHash::hash(passwordByteArray, QCryptographicHash::Sha256);
+    return QString(hash.toHex());
+}
+
+// bool verifyPassword(const QString &password, const QString &hashedPassword) {
+//     QString hashedInput = hashPassword(password);
+//     return hashedInput == hashedPassword;
+// }
 
 MainScreen::MainScreen(QWidget *parent)
     : QMainWindow(parent)
@@ -122,6 +133,7 @@ void MainScreen::on_signupBtn_clicked()
 {
     QString signupEmail = ui->signupEmail->text();
     QString signupPw = ui->signupPw->text();
+    QString hashedPassword = hashPassword(signupPw);
     QString firstName = ui->firstName->text();
     QString lastName = ui->lastName->text();
 
@@ -134,7 +146,7 @@ void MainScreen::on_signupBtn_clicked()
     QSqlQuery crdQuery;
     crdQuery.prepare("INSERT INTO credentials (email, password) VALUES (:email, :password)");
     crdQuery.bindValue(":email", signupEmail);
-    crdQuery.bindValue(":password", signupPw);
+    crdQuery.bindValue(":password", hashedPassword);
 
     if(crdQuery.exec())
     {
@@ -176,11 +188,13 @@ void MainScreen::on_loginBtn_clicked()
     QString loginEmail = ui->loginEmail->text();
     QString loginPw = ui->loginPw->text();
 
+    QString loginHashedPassword = hashPassword(loginPw);
+
     // Verify credentials
     QSqlQuery verifyUser;
     verifyUser.prepare("SELECT user_id FROM credentials WHERE email = :email AND password = :password");
     verifyUser.bindValue(":email", loginEmail);
-    verifyUser.bindValue(":password", loginPw);
+    verifyUser.bindValue(":password", loginHashedPassword); // Bind hashed password
 
     if (verifyUser.exec() && verifyUser.next()) {
         // Login successful
