@@ -916,7 +916,7 @@ font:700 40pt;
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;टाउकोले लेख्ने, पुच्छरले मेटने, के हो ?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton">
+     <widget class="QRadioButton" name="radioButton_1">
       <property name="geometry">
        <rect>
         <x>590</x>

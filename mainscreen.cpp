@@ -4,15 +4,12 @@
 #include <QDebug>
 #include <QLabel>
 #include <QTextEdit>
-#include <QCryptographicHash>
-
 #include "database.h"
 
 
 /*
 
 Index:
-
 login page :0
 sign up page : 1
 welcome page : 2
@@ -28,16 +25,6 @@ thank you page : 7
 using namespace std;
 
 
-QString hashPassword(const QString &password) {
-    QByteArray passwordByteArray = password.toUtf8();
-    QByteArray hash = QCryptographicHash::hash(passwordByteArray, QCryptographicHash::Sha256);
-    return QString(hash.toHex());
-}
-
-// bool verifyPassword(const QString &password, const QString &hashedPassword) {
-//     QString hashedInput = hashPassword(password);
-//     return hashedInput == hashedPassword;
-// }
 
 MainScreen::MainScreen(QWidget *parent)
     : QMainWindow(parent)
@@ -48,26 +35,26 @@ MainScreen::MainScreen(QWidget *parent)
     ui->setupUi(this);
     loadQuizQuestions();
 
-    connect(ui->radioButton, SIGNAL(toggled(bool)), this, SLOT(onAnswerButtonToggled(bool)));
+    connect(ui->radioButton_1, SIGNAL(toggled(bool)), this, SLOT(onAnswerButtonToggled(bool)));
     connect(ui->radioButton_2, SIGNAL(toggled(bool)), this, SLOT(onAnswerButtonToggled(bool)));
     connect(ui->radioButton_3, SIGNAL(toggled(bool)), this, SLOT(onAnswerButtonToggled(bool)));
     connect(ui->radioButton_4, SIGNAL(toggled(bool)), this, SLOT(onAnswerButtonToggled(bool)));
 
     //connecting mysql database
     mydb = QSqlDatabase::addDatabase("QMYSQL");
-    mydb.setHostName("127.0.0.1");
+    mydb.setHostName("localhost");
     mydb.setUserName("root");
-    mydb.setPassword("root");
+    mydb.setPassword("");
     mydb.setDatabaseName("supr");
 
-    // if(mydb.open())
-    // {
-    //     qDebug() << "Database is Connected";
-    // }
-    // else
-    // {
-    //     qDebug() << "Database is not connected ";
-    // }
+    if(mydb.open())
+    {
+        qDebug() << "Database is Connected";
+    }
+    else
+    {
+        qDebug() << "Database is not connected ";
+    }
 
 
 }
@@ -90,21 +77,21 @@ void MainScreen::loadQuizQuestions()
 
 void MainScreen::displayCurrentQuestion()
 {
-    ui->radioButton->setChecked(false);
+    ui->radioButton_1->setChecked(false);
     ui->radioButton_2->setChecked(false);
     ui->radioButton_3->setChecked(false);
     ui->radioButton_4->setChecked(false);
 
     if (currentQuestionIndex < quizQuestions.size())
     {
-        ui->radioButton->setChecked(false);
+        ui->radioButton_1->setChecked(false);
         ui->radioButton_2->setChecked(false);
         ui->radioButton_3->setChecked(false);
         ui->radioButton_4->setChecked(false);
         const QuizQuestion &currentQuestion = quizQuestions[currentQuestionIndex];
         ui->question->setText(currentQuestion.question);
 
-        ui->radioButton->setText(currentQuestion.options[0]);
+        ui->radioButton_1->setText(currentQuestion.options[0]);
         ui->radioButton_2->setText(currentQuestion.options[1]);
         ui->radioButton_3->setText(currentQuestion.options[2]);
         ui->radioButton_4->setText(currentQuestion.options[3]);
@@ -129,11 +116,99 @@ void MainScreen::on_signupLink_clicked()
     ui->stackedWidget->setCurrentIndex(1);
 }
 
+// void MainScreen::on_signupBtn_clicked()
+// {
+//     QString signupEmail = ui->signupEmail->text();
+//     QString signupPw = ui->signupPw->text();
+//     QString firstName = ui->firstName->text();
+//     QString lastName = ui->lastName->text();
+
+//     // Open the database connection
+//     if (!mydb.open()) {
+//         qDebug() << "Error opening database connection:" << mydb.lastError().text();
+//         return;
+//     }
+
+//     QSqlQuery crdQuery;
+//     crdQuery.prepare("INSERT INTO credentials (email, password) VALUES (:email, :password)");
+//     crdQuery.bindValue(":email", signupEmail);
+//     crdQuery.bindValue(":password", signupPw);
+
+//     if(crdQuery.exec())
+//     {
+//         int userId = crdQuery.lastInsertId().toInt();
+
+//         // Save the user ID for later use
+//         this->userId = userId;
+
+//         QSqlQuery query;
+//         query.prepare("INSERT INTO userinfo (id, first_name, last_name) VALUES (:id, :firstName, :lastName)");
+//         query.bindValue(":id", userId);
+//         query.bindValue(":firstName", firstName);
+//         query.bindValue(":lastName", lastName);
+
+//         if(!query.exec())
+//         {
+//             ui->databaseStatus_s->setStyleSheet("color: red; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
+//             ui->databaseStatus_s->setText("Unsuccessful...");
+//         }
+//         else
+//         {
+//             ui->databaseStatus_s->setStyleSheet("color: green; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
+//             ui->databaseStatus_s->setText("Signup Successful...");
+//         }
+//     }
+//     else
+//     {
+//         QMessageBox::information(this,"Error executing query",crdQuery.lastError().text());
+//     }
+
+//     // Close the database connection
+//     mydb.close();
+// }
+
+// void MainScreen::on_loginBtn_clicked()
+// {
+//     mydb.open();
+//     // Getting data from user
+//     QString loginEmail = ui->loginEmail->text();
+//     QString loginPw = ui->loginPw->text();
+
+//     // Verify credentials
+//     QSqlQuery verifyUser;
+//     verifyUser.prepare("SELECT user_id FROM credentials WHERE email = :email AND password = :password");
+//     verifyUser.bindValue(":email", loginEmail);
+//     verifyUser.bindValue(":password", loginPw);
+
+//     if (verifyUser.exec() && verifyUser.next()) {
+//         // Login successful
+//         int userId = verifyUser.value("user_id").toInt();
+//         qDebug() << "User ID:" << userId;
+
+//         ui->databaseStatus_s->setStyleSheet("color: green; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
+//         ui->databaseStatus_s->setText("Login Successful...");
+
+//         // Redirect user to the appropriate page or perform other actions
+//         ui->stackedWidget->setCurrentIndex(2);
+//     } else {
+//         // Login failed
+//         ui->databaseStatus_l->setStyleSheet("color: red; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
+//         ui->databaseStatus_l->setText("Invalid credentials");
+
+//         qDebug() << "Invalid credentials";
+//     }
+//     mydb.close();
+
+//     mydb.close();
+// }
+
+
+// After Using Hash Password
+
 void MainScreen::on_signupBtn_clicked()
 {
     QString signupEmail = ui->signupEmail->text();
     QString signupPw = ui->signupPw->text();
-    QString hashedPassword = hashPassword(signupPw);
     QString firstName = ui->firstName->text();
     QString lastName = ui->lastName->text();
 
@@ -149,11 +224,7 @@ void MainScreen::on_signupBtn_clicked()
     QString hashedPasswordHex = QString(hashedPassword.toHex());
 
     crdQuery.bindValue(":email", signupEmail);
-<<<<<<< HEAD
-    crdQuery.bindValue(":password", hashedPassword);
-=======
     crdQuery.bindValue(":password", hashedPasswordHex);
->>>>>>> ab315b99d6d6dd477d609bbc3382b392d04d867a
 
     if(crdQuery.exec())
     {
@@ -188,97 +259,6 @@ void MainScreen::on_signupBtn_clicked()
     mydb.close();
 }
 
-
-// void MainScreen::on_loginBtn_clicked()
-// {
-//     // QString loginEmail = ui->loginEmail->text();
-//     // QString loginPw = ui->loginPw->text();
-
-
-//        ui->stackedWidget->setCurrentIndex(2);
-
-//     // QSqlDatabase mydb;
-//     //    mydb= QSqlDatabase::addDatabase("QMYSQL");
-//     //    mydb.setHostName("localhost");
-//     //    mydb.setUserName("root");
-//     //    mydb.setPassword("");
-//     //    mydb.setDatabaseName("supr");
-//     //    mydb.setPort(3036);
-
-//     //    if(mydb.open())
-//     //    {
-//     //        ui->databaseStatus_l->setText("Successful Connection");
-//     //    }
-//     //    else
-//     //    {
-
-//     //        ui->databaseStatus_l->setText("Unsuccessful Connection");
-//     //    }
-
-// }
-
-// void MainScreen::displayUserScores()
-// {
-//     // Clear previous data
-//     // ui->scoreTable->clear();
-
-//     // Open the database connection
-//     if (!mydb.open()) {
-//         qDebug() << "Error opening database connection:" << mydb.lastError().text();
-//         return;
-//     }
-
-//     // Execute the SELECT query
-//     QSqlQuery query("SELECT email, score FROM score", mydb);
-
-//     // Iterate over the results and display them
-//     while (query.next()) {
-//         QString email = query.value(0).toString();
-//         int score = query.value(1).toInt();
-
-//         // Display email and score in a QListWidget
-//         QString itemText = QString("%1: %2").arg(email).arg(score);
-//         ui->scoreTable->addItem(itemText);
-//     }
-
-//     // Close the database connection
-//     mydb.close();
-// }
-
-
-// void MainScreen::on_loginBtn_clicked()
-// {
-//     mydb.open();
-//     // Getting data from user
-//     QString loginEmail = ui->loginEmail->text();
-//     QString loginPw = ui->loginPw->text();
-
-//     // Verify credentials
-//     QSqlQuery verifyUser;
-//     verifyUser.prepare("SELECT user_id FROM credentials WHERE email = :email AND password = :password");
-//     verifyUser.bindValue(":email", loginEmail);
-//     verifyUser.bindValue(":password", loginPw);
-
-//     if (verifyUser.exec() && verifyUser.next()) {
-//         // Login successful
-//         int userId = verifyUser.value("user_id").toInt();
-//         qDebug() << "User ID:" << userId;
-
-//         ui->databaseStatus_s->setStyleSheet("color: green; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
-//         ui->databaseStatus_s->setText("Login Successful...");
-
-//         // Redirect user to the appropriate page or perform other actions
-//         ui->stackedWidget->setCurrentIndex(2);
-//     } else {
-//         // Login failed
-//         ui->databaseStatus_l->setStyleSheet("color: red; background-color: transparent; font: 700 9.5pt 'Segoe UI';");
-//         ui->databaseStatus_l->setText("Invalid credentials");
-
-//         qDebug() << "Invalid credentials";
-//     }
-//     mydb.close();
-// }
-
 void MainScreen::on_loginBtn_clicked()
 {
     mydb.open();
@@ -286,20 +266,10 @@ void MainScreen::on_loginBtn_clicked()
     QString loginEmail = ui->loginEmail->text();
     QString loginPw = ui->loginPw->text();
 
-<<<<<<< HEAD
-    QString loginHashedPassword = hashPassword(loginPw);
-
-    // Verify credentials
-    QSqlQuery verifyUser;
-    verifyUser.prepare("SELECT user_id FROM credentials WHERE email = :email AND password = :password");
-    verifyUser.bindValue(":email", loginEmail);
-    verifyUser.bindValue(":password", loginHashedPassword); // Bind hashed password
-=======
     // Retrieve hashed password from the database
     QSqlQuery getPasswordQuery;
     getPasswordQuery.prepare("SELECT password FROM credentials WHERE email = :email");
     getPasswordQuery.bindValue(":email", loginEmail);
->>>>>>> ab315b99d6d6dd477d609bbc3382b392d04d867a
 
     if (getPasswordQuery.exec() && getPasswordQuery.next()) {
         QString storedHashedPassword = getPasswordQuery.value("password").toString();
@@ -338,6 +308,8 @@ void MainScreen::on_loginBtn_clicked()
 
     mydb.close();
 }
+
+
 
 void MainScreen::on_loginLink_clicked()
 {
@@ -392,18 +364,18 @@ void MainScreen::on_nextBtn_clicked()
 
     bool scoreUpdated = false;
     // ui->demo_label->hide();
-    ui->radioButton->setStyleSheet("background-color: none;");
+    ui->radioButton_1->setStyleSheet("background-color: none;");
     ui->radioButton_2->setStyleSheet("background-color: none;");
     ui->radioButton_3->setStyleSheet("background-color: none;");
     ui->radioButton_4->setStyleSheet("background-color: none;");
 
-    ui->radioButton->setAutoExclusive(false);
+    ui->radioButton_1->setAutoExclusive(false);
     ui->radioButton_2->setAutoExclusive(false);
     ui->radioButton_3->setAutoExclusive(false);
     ui->radioButton_4->setAutoExclusive(false);
 
     // Disable all radio buttons for the current question
-    ui->radioButton->setEnabled(false);
+    ui->radioButton_1->setEnabled(false);
     ui->radioButton_2->setEnabled(false);
     ui->radioButton_3->setEnabled(false);
     ui->radioButton_4->setEnabled(false);
@@ -414,7 +386,7 @@ void MainScreen::on_nextBtn_clicked()
         // Determine which radio button to check based on the loop index
         switch (i) {
         case 0:
-            myRadioButton = ui->radioButton;
+            myRadioButton = ui->radioButton_1;
             break;
         case 1:
             myRadioButton = ui->radioButton_2;
@@ -438,11 +410,11 @@ void MainScreen::on_nextBtn_clicked()
 
     // Move to the next question or handle as needed
     ++currentQuestionIndex;
-    updateScoreLabel();
+    // updateScoreLabel();
     displayCurrentQuestion();
 
     // Enable radio buttons for the new question
-    ui->radioButton->setEnabled(true);
+    ui->radioButton_1->setEnabled(true);
     ui->radioButton_2->setEnabled(true);
     ui->radioButton_3->setEnabled(true);
     ui->radioButton_4->setEnabled(true);
@@ -513,7 +485,7 @@ void MainScreen::onAnswerButtonToggled(bool checked)
 
             switch (correctIndex) {
             case 1:
-                correctButton = ui->radioButton;
+                correctButton = ui->radioButton_1;
                 break;
             case 2:
                 correctButton = ui->radioButton_2;
@@ -533,13 +505,12 @@ void MainScreen::onAnswerButtonToggled(bool checked)
         }
 
         // Disable all radio buttons for the current question
-        ui->radioButton->setEnabled(false);
+        ui->radioButton_1->setEnabled(false);
         ui->radioButton_2->setEnabled(false);
         ui->radioButton_3->setEnabled(false);
         ui->radioButton_4->setEnabled(false);
     }
 }
-
 
 
 

@@ -63,7 +63,7 @@ private slots:
     void onAnswerButtonToggled(bool checked);
 
 private:
-// public:
+    // public:
     Ui::MainScreen *ui;
 
     QSqlDatabase mydb;
